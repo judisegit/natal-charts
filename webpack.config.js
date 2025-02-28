@@ -9,9 +9,28 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.js$/, exclude: /node_modules/, use: [ { loader: "babel-loader" } ] },
-      { test: /\.css$/, use: [ { loader: 'style-loader'}, { 'loader': 'css-loader' } ] },
-      { test: /\.scss$/, use: [ 'style-loader', 'css-loader', 'sass-loader' ] }
+      { 
+        test: /\.js$/, 
+        exclude: /node_modules/, 
+        use: [{ loader: 'babel-loader' }] 
+      },
+      { 
+        test: /\.css$/, 
+        use: ['style-loader', 'css-loader'] 
+      },
+      { 
+        test: /\.scss$/, 
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: require('sass') // 明確使用 sass
+            }
+          }
+        ]
+      }
     ]
   },
   resolve: {
@@ -26,7 +45,7 @@ module.exports = {
         warnings: false,
         drop_console: false
       }
-    }),
+    })
   ],
   devtool: 'cheap-module-eval-source-map',
   devServer: {
